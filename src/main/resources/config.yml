@@ -1,29 +1,29 @@
 Settings:
   Repeater:
-    # If enabled then any entity will be pushed along the repeater path.
+    # If enabled then any non-player entity will be pushed along a (powered) repeater path.
     Enabled: true
 
-    # If enabled then entities on top of a fast block will move faster
+    # If enabled then non-player entities on top of a fast block will move faster
     FastEnabled: true
 
     # Normal multiplier
-    Normal: 2.5
+    Normal: 1.5
 
     # Fast block multiplier
-    Fast: 3.0
+    Fast: 2.0
 
-    # Fast blcok id. By default 80 (Snow)
+    # Fast block id. By default 42 (Snow)
     FastBlock: IRON_BLOCK
 
   Piston:
-    # If enabled then pistons will fling any entities it pushes.
+    # If enabled then pistons will fling any non-player entities it pushes.
     Enabled: false
 
     # The force multiplier
     Force: 1.0
 
   Teleporter:
-    # If enabled then any entity on top of a repeater with a block in fron if it will be teleported
+    # If enabled then any non-player entity on top of a repeater with a block in fron if it will be teleported
     Enabled: false
 
     # The amount of blocks the entity will be teleported
@@ -34,19 +34,22 @@ Settings:
     Diamond: 25
     Emerald: 30
 
-  StairCannon:    
+  StairCannon:
+    # WOOD STAIR RAILGUN/CANNON(s) 
     Enabled: true
 
     # The force multiplier
     Force: 0.75
 
   StairCannon2:
+    # NETHER BRICK STAIR RAILGUN/CANNON(s)
     Enabled: true
 
     # The force multiplier
     Force: 2.5
 
   StairCannon3:
+    # QUARTZ STIAR RAILGUN/CANNONS(s)
     Enabled: true
 
     # The force multiplier
@@ -63,4 +66,4 @@ Settings:
     Ladder: false
 
     # The minimum amount of TPS when the plugin should run
-    MinimumTPS: 1.0
+    MinimumTPS: 7.5
