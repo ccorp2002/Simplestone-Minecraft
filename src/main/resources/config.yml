@@ -7,63 +7,34 @@ Settings:
     FastEnabled: true
 
     # Normal multiplier
-    Normal: 1.5
+    Normal: 1.0
 
     # Fast block multiplier
     Fast: 2.0
 
-    # Fast block id. By default 42 (Snow)
+    # Fast block id. By default IRON_BLOCK
     FastBlock: IRON_BLOCK
-
-  Piston:
-    # If enabled then pistons will fling any non-player entities it pushes.
-    Enabled: false
-
-    # The force multiplier
-    Force: 1.0
-
-  Teleporter:
-    # If enabled then any non-player entity on top of a repeater with a block in fron if it will be teleported
-    Enabled: false
-
-    # The amount of blocks the entity will be teleported
-    Iron: 5
-    Redstone: 10
-    Gold: 15
-    Lapis: 20
-    Diamond: 25
-    Emerald: 30
 
   StairCannon:
     # WOOD STAIR RAILGUN/CANNON(s) 
     Enabled: true
 
     # The force multiplier
-    Force: 0.75
+    Force: 0.5
 
   StairCannon2:
     # NETHER BRICK STAIR RAILGUN/CANNON(s)
     Enabled: true
 
     # The force multiplier
-    Force: 2.5
+    Force: 1.0
 
   StairCannon3:
-    # QUARTZ STIAR RAILGUN/CANNONS(s)
+    # QUARTZ STAIR RAILGUN/CANNONS(s)
     Enabled: true
 
     # The force multiplier
-    Force: 3.5
-
-  Other:
-    # If enabled then any item above a chest will get sucked in
-    ChestEater: false
-
-    # If enabled then activates redstone around the block that has an entity traveling through
-    Redstone: false
-
-    # If enabled then any entity will be pushed up the ladders.
-    Ladder: false
+    Force: 1.5
 
     # The minimum amount of TPS when the plugin should run
     MinimumTPS: 7.5

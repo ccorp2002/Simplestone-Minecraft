@@ -135,25 +135,6 @@
 /*     */           },  5L);
 /*     */     } 
 /*     */   }
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */   
-/*     */   public static void pushEntities(Location location, BlockFace face) {
-/* 148 */     for (Entity e : location.getWorld().getEntities()) {
-/* 149 */       if (e.getLocation().getBlockX() == location.getBlockX() && e
-/* 150 */         .getLocation().getBlockY() == location.getBlockY() && e
-/* 151 */         .getLocation().getBlockZ() == location.getBlockZ()) {
-/* 152 */         e.setVelocity(e.getVelocity().add(
-/* 153 */               faceToForce(face).multiply(100.0D * Simplestone.getPlugin().getConfig().getDouble("Settings.Piston.Force"))));
-/*     */       }
-/*     */     } 
-/*     */   }
 /*     */   
 /*     */   public static void cleanupEntities() {
 /* 159 */     (new BukkitRunnable() {

@@ -21,133 +21,191 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class EntityCalculator extends BukkitRunnable {
+public class EntityCalculator extends BukkitRunnable
+{
 
-	private Simplestone plugin;
-	private List<Entity> following = new ArrayList<Entity>();
-	
-	public EntityCalculator(Simplestone plugin){
-		this.plugin = plugin;
-	}
-	
-	/**
-	 * Returns all entities from all worlds
-	 * @return list of all entities
-	 */
-	public Collection<? extends Entity> getAllEntities(){
-		List<Entity> ent = new ArrayList<Entity>();
-		for(World w : Bukkit.getWorlds()){
-			ent.addAll(w.getEntities());
-		}
-		return ent;
-	}
-	
-	public void run() {
-		if(plugin.getTpsCounter().getAverageTPS() < plugin.getConfig().getDouble("Settings.Other.MinimumTPS")) return;
-		
-		following.addAll(getAllEntities());
-		Iterator<Entity> iterator = following.iterator();
-		while(iterator.hasNext()){
-			Entity i = iterator.next();
+  private Simplestone plugin;
+  private List < Entity > following = new ArrayList < Entity > ();
 
-			if(i.isDead() || !i.isValid() || i instanceof Player){
-				iterator.remove();
-				continue;
-			}
+  public EntityCalculator (Simplestone plugin)
+  {
+    this.plugin = plugin;
+  }
 
-			Block myBlock = i.getLocation().getBlock();
+ /**
+  * Returns all entities from all worlds
+  * @return list of all entities
+  */
+  public Collection < ? extends Entity > getAllEntities ()
+  {
+    List < Entity > ent = new ArrayList < Entity > ();
+  for (World w:Bukkit.getWorlds ())
+      {
+	ent.addAll (w.getEntities ());
+      }
+    return ent;
+  }
 
-			if(myBlock.getType() != Material.AIR){
-				if(myBlock.getType() == Material.DIODE_BLOCK_ON){
-					if(!plugin.getConfig().getBoolean("Settings.Repeater.Enabled")) continue;
-					Diode b = (Diode) myBlock.getState().getData();
-					Utils.powerBlock(i.getLocation());
-					
-					if(myBlock.getRelative(b.getFacing()).getType() != Material.DIODE_BLOCK_ON){
-						Material m = myBlock.getRelative(b.getFacing()).getType();
-						Material m_TWO = myBlock.getRelative(b.getFacing()).getType();
-						Material m_THREE = myBlock.getRelative(b.getFacing()).getType();
-						if(m == Material.WOOD_STAIRS || m == Material.SPRUCE_WOOD_STAIRS || m == Material.BIRCH_WOOD_STAIRS || m == Material.JUNGLE_WOOD_STAIRS || m == Material.DARK_OAK_STAIRS || m == Material.ACACIA_STAIRS){
-							if(!plugin.getConfig().getBoolean("Settings.StairCannon.Enabled")) continue;
-							if(i instanceof Item){
-								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(100 * plugin.getConfig().getDouble("Settings.StairCannon.Force")).add(new Vector(0, 1, 0)));
-							}else{
-								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(400 * plugin.getConfig().getDouble("Settings.StairCannon.Force")).add(new Vector(0, 1, 0)));
-							}
-                        }
-                    if(m_TWO == Material.NETHER_BRICK_STAIRS){
-							if(!plugin.getConfig().getBoolean("Settings.StairCannon2.Enabled")) continue;
-							if(i instanceof Item){
-								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(100 * plugin.getConfig().getDouble("Settings.StairCannon2.Force")).add(new Vector(0, 1, 0)));
-							}else{
-								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(400 * plugin.getConfig().getDouble("Settings.StairCannon2.Force")).add(new Vector(0, 1, 0)));
-							}
-                        }
-                    if(m_THREE == Material.QUARTZ_STAIRS){
-							if(!plugin.getConfig().getBoolean("Settings.StairCannon3.Enabled")) continue;
-							if(i instanceof Item){
-								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(100 * plugin.getConfig().getDouble("Settings.StairCannon3.Force")).add(new Vector(0, 1, 0)));
-							}else{
-								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(400 * plugin.getConfig().getDouble("Settings.StairCannon3.Force")).add(new Vector(0, 1, 0)));
-							}
-                        }
-                        else{
-							if(!plugin.getConfig().getBoolean("Settings.Teleporter.Enabled")) continue;
-							
-							if(m == Material.IRON_BLOCK){
-								i.teleport(i.getLocation().add(Utils.faceToForce(b.getFacing()).multiply(plugin.getConfig().getDouble("Settings.Teleporter.Iron")*100)));
-							}else if(m == Material.REDSTONE_BLOCK){
-								i.teleport(i.getLocation().add(Utils.faceToForce(b.getFacing()).multiply(plugin.getConfig().getDouble("Settings.Teleporter.Redstone")*100)));
-							}else if(m == Material.GOLD_BLOCK){
-								i.teleport(i.getLocation().add(Utils.faceToForce(b.getFacing()).multiply(plugin.getConfig().getDouble("Settings.Teleporter.Gold")*100)));
-							}else if(m == Material.LAPIS_BLOCK){
-								i.teleport(i.getLocation().add(Utils.faceToForce(b.getFacing()).multiply(plugin.getConfig().getDouble("Settings.Teleporter.Lapis")*100)));
-							}else if(m == Material.DIAMOND_BLOCK){
-								i.teleport(i.getLocation().add(Utils.faceToForce(b.getFacing()).multiply(plugin.getConfig().getDouble("Settings.Teleporter.Diamond")*100)));
-							}else if(m == Material.EMERALD_BLOCK){
-								i.teleport(i.getLocation().add(Utils.faceToForce(b.getFacing()).multiply(plugin.getConfig().getDouble("Settings.Teleporter.Emerald")*100)));
-							}else{
-								if(myBlock.getRelative(BlockFace.DOWN).getType() == Material.SNOW_BLOCK && plugin.getConfig().getBoolean("Settings.Repeater.FastEnabled")){
-									i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(30 * plugin.getConfig().getDouble("Settings.Repeater.Fast")).add(Utils.centerExcludeFace(i.getLocation(), b.getFacing()).multiply(0.5)));
-								}else{
-									i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(30 * plugin.getConfig().getDouble("Settings.Repeater.Normal")).add(Utils.centerExcludeFace(i.getLocation(), b.getFacing()).multiply(0.5)));
-								}
-							}
-						}
-					}else{
-						if(myBlock.getRelative(BlockFace.DOWN).getType() == Material.SNOW_BLOCK && plugin.getConfig().getBoolean("Settings.Repeater.FastEnabled")){
-							i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(30 * plugin.getConfig().getDouble("Settings.Repeater.Fast")).add(Utils.centerExcludeFace(i.getLocation(), b.getFacing()).multiply(0.7)));
-						}else{
-							i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(30 * plugin.getConfig().getDouble("Settings.Repeater.Normal")).add(Utils.centerExcludeFace(i.getLocation(), b.getFacing()).multiply(0.7)));
-						}
-					}
-					
-				}else if(myBlock.getType() == Material.LADDER){
-					if(!plugin.getConfig().getBoolean("Settings.Other.Ladder")) continue;
-					Ladder l = (Ladder) myBlock.getState().getData();
-					
-					if(myBlock.getRelative(BlockFace.UP, 2).getType() == Material.LADDER && myBlock.getRelative(BlockFace.UP).getType() == Material.LADDER){
-						if(i.getVelocity().getY() > 1) continue;
-						Ladder lu = (Ladder) myBlock.getRelative(BlockFace.UP).getState().getData();
-						i.setVelocity(new Vector(0, 1, 0).add(Utils.center(i.getLocation()).multiply(0.3)).add(Utils.faceToForce(lu.getAttachedFace()).multiply(50)));
-					}else{
-						i.teleport(i.getLocation().add(0, 2, 0).add(Utils.faceToForce(l.getAttachedFace()).multiply(100)));
-						i.setVelocity(new Vector(0, 0, 0));
-					}
-					
-					Utils.powerBlock(i.getLocation());
-				}	
-			}else if(myBlock.getRelative(BlockFace.DOWN).getType() == Material.CHEST){
-				if(!plugin.getConfig().getBoolean("Settings.Other.ChestEater")) continue;
-				if(i instanceof Item){
-					Chest c = (Chest) myBlock.getRelative(BlockFace.DOWN).getState();
-					c.getInventory().addItem(((Item) i).getItemStack());
-					i.remove();
-					Utils.powerBlock(i.getLocation());
-				}
-			}
-		}
-		following.clear();
-	}
+  public void run ()
+  {
+    if (plugin.getTpsCounter ().getAverageTPS () <
+	plugin.getConfig ().getDouble ("Settings.Other.MinimumTPS"))
+      return;
 
-}
+    following.addAll (getAllEntities ());
+    Iterator < Entity > iterator = following.iterator ();
+    while (iterator.hasNext ())
+      {
+	Entity i = iterator.next ();
+
+	if (i.isDead () || !i.isValid () || i instanceof Player)
+	  {
+	    iterator.remove ();
+	    continue;
+	  }
+
+	Block myBlock = i.getLocation ().getBlock ();
+
+	if (myBlock.getType () != Material.AIR)
+	  {
+	    if (myBlock.getType () == Material.DIODE_BLOCK_ON)
+	      {
+		if (!plugin.getConfig ().
+		    getBoolean ("Settings.Repeater.Enabled"))
+		  continue;
+		Diode b = (Diode) myBlock.getState ().getData ();
+		Utils.powerBlock (i.getLocation ());
+
+		if (myBlock.getRelative (b.getFacing ()).getType () !=
+		    Material.DIODE_BLOCK_ON)
+		  {
+		    Material m =
+		      myBlock.getRelative (b.getFacing ()).getType ();
+		    Material m_TWO =
+		      myBlock.getRelative (b.getFacing ()).getType ();
+		    Material m_THREE =
+		      myBlock.getRelative (b.getFacing ()).getType ();
+		    if (m == Material.WOOD_STAIRS
+			|| m == Material.SPRUCE_WOOD_STAIRS
+			|| m == Material.BIRCH_WOOD_STAIRS
+			|| m == Material.JUNGLE_WOOD_STAIRS
+			|| m == Material.DARK_OAK_STAIRS
+			|| m == Material.ACACIA_STAIRS)
+		      {
+			if (!plugin.getConfig ().
+			    getBoolean ("Settings.StairCannon.Enabled"))
+			  continue;
+			if (i instanceof Item)
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (100 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.StairCannon.Force")).
+					   add (new Vector (0, 1, 0)));
+			  }
+			else
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (400 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.StairCannon.Force")).
+					   add (new Vector (0, 1, 0)));
+			  }
+		      }
+		    if (m_TWO == Material.NETHER_BRICK_STAIRS)
+		      {
+			if (!plugin.getConfig ().
+			    getBoolean ("Settings.StairCannon2.Enabled"))
+			  continue;
+			if (i instanceof Item)
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (100 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.StairCannon2.Force")).
+					   add (new Vector (0, 1, 0)));
+			  }
+			else
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (400 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.StairCannon2.Force")).
+					   add (new Vector (0, 1, 0)));
+			  }
+		      }
+		    if (m_THREE == Material.QUARTZ_STAIRS)
+		      {
+			if (!plugin.getConfig ().
+			    getBoolean ("Settings.StairCannon3.Enabled"))
+			  continue;
+			if (i instanceof Item)
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (100 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.StairCannon3.Force")).
+					   add (new Vector (0, 1, 0)));
+			  }
+			else
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (400 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.StairCannon3.Force")).
+					   add (new Vector (0, 1, 0)));
+			  }
+		      }
+		    else
+		      {
+			if (myBlock.getRelative (BlockFace.DOWN).getType () ==
+			    Material.IRON_BLOCK
+			    && plugin.getConfig ().
+			    getBoolean ("Settings.Repeater.FastEnabled"))
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (30 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.Repeater.Fast")).
+					   add (Utils.
+						centerExcludeFace (i.
+								   getLocation
+								   (),
+								   b.
+								   getFacing
+								   ()).
+						multiply (0.7)));
+			  }
+			else
+			  {
+			    i.setVelocity (Utils.faceToForce (b.getFacing ()).
+					   multiply (30 *
+						     plugin.getConfig ().
+						     getDouble
+						     ("Settings.Repeater.Normal")).
+					   add (Utils.
+						centerExcludeFace (i.
+								   getLocation
+								   (),
+								   b.
+								   getFacing
+								   ()).
+						multiply (0.7)));
+			  }
+		      }
+		  }
+    }
+	      }
+	  }
+	following.clear ();
+      }
+
+  }
+

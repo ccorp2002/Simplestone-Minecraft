@@ -2,7 +2,6 @@
 /*    */ 
 /*    */ import com.ccorp2002.commands.CleanupCommand;
 /*    */ import com.ccorp2002.commands.TPSCommand;
-/*    */ import com.ccorp2002.listeners.PistonListener;
 /*    */ import com.ccorp2002.tasks.EntityCalculator;
 /*    */ import com.ccorp2002.tasks.TPSCounter;
 /*    */ import org.bukkit.command.CommandExecutor;
@@ -23,7 +22,6 @@
 /* 23 */     this.calc = new EntityCalculator(this);
 /* 24 */     this.calc.runTaskTimer((Plugin)this, 0L, 5L);
 /*    */     
-/* 26 */     getServer().getPluginManager().registerEvents((Listener)new PistonListener(this), (Plugin)this);
 /* 27 */     getCommand("cleanup").setExecutor((CommandExecutor)new CleanupCommand(this));
 /* 28 */     getCommand("tps").setExecutor((CommandExecutor)new TPSCommand(this));
 /*    */     
