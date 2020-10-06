@@ -67,7 +67,8 @@ public class EntityCalculator extends BukkitRunnable {
 						Material m = myBlock.getRelative(b.getFacing()).getType();
 						Material m_TWO = myBlock.getRelative(b.getFacing()).getType();
 						Material m_THREE = myBlock.getRelative(b.getFacing()).getType();
-						Material m_FLAK = myBlock.getRelative(b.getFacing()).getType();
+						Material m_FLAK = myBlock.getRelative(b.getFacing()).getType();;
+						Material m_MORTAR = myBlock.getRelative(b.getFacing()).getType();
 						if(m == Material.WOOD_STAIRS || m == Material.SPRUCE_WOOD_STAIRS || m == Material.BIRCH_WOOD_STAIRS || m == Material.JUNGLE_WOOD_STAIRS || m == Material.DARK_OAK_STAIRS || m == Material.ACACIA_STAIRS){
 							if(!plugin.getConfig().getBoolean("Settings.StairCannon.Enabled")) continue;
 							if(i instanceof Item){
@@ -98,6 +99,22 @@ public class EntityCalculator extends BukkitRunnable {
 								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(400 * plugin.getConfig().getDouble("Settings.StairCannonFlak.Force")).add(new Vector(0, 4, 0)));
 							}else{
 								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(100 * plugin.getConfig().getDouble("Settings.StairCannonFlak.Force")).add(new Vector(0, 4, 0)));
+							}
+            }
+                    if(m_FLAK == Material.PURPUR_STAIRS){
+							if(!plugin.getConfig().getBoolean("Settings.StairCannonFlak.Enabled")) continue;
+							if(i instanceof Item){
+								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(400 * plugin.getConfig().getDouble("Settings.StairCannonFlak.Force")).add(new Vector(0, 4, 0)));
+							}else{
+								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(100 * plugin.getConfig().getDouble("Settings.StairCannonFlak.Force")).add(new Vector(0, 4, 0)));
+							}
+            }
+                    if(m_MORTAR == Material.BRICK_STAIRS){
+							if(!plugin.getConfig().getBoolean("Settings.StairCannonMortar.Enabled")) continue;
+							if(i instanceof Item){
+								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(175 * plugin.getConfig().getDouble("Settings.StairCannonMortar.Force")).add(new Vector(0, 3, 0)));
+							}else{
+								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(200 * plugin.getConfig().getDouble("Settings.StairCannonMortar.Force")).add(new Vector(0, 2, 0)));
 							}
             }
 					}else{

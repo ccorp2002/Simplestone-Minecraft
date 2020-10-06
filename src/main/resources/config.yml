@@ -36,15 +36,17 @@ Settings:
     # The force multiplier
     Force: 2.0
 
-    # The minimum amount of TPS when the plugin should run
-    MinimumTPS: 7.5
-
   StairCannonFlak:
     # PURPUR STAIR RAILGUN/FLAK/CANNONS(s)
     Enabled: true
-
     # The force multiplier
-    Force: 2.5
+    Force: 2.7
 
-    # The minimum amount of TPS when the plugin should run
-    MinimumTPS: 7.5
+  StairCannonMortar:
+    # BRICK STAIR RAILGUN/MORTAR/ARTILLERY(s)
+    Enabled: true
+    # The force multiplier
+    Force: 1.5
+
+  # The minimum amount of TPS when the plugin should run
+  MinimumTPS: 7.5
