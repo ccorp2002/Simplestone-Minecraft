@@ -95,47 +95,6 @@
 /*     */ 
 /*     */ 
 /*     */ 
-/*     */   
-/*     */   public static void powerBlock(Location location) {
-/* 100 */     if (!Simplestone.getPlugin().getConfig().getBoolean("Settings.Other.Redstone"))
-/*     */       return; 
-/* 102 */     final Block b = location.getBlock();
-/*     */     
-/* 104 */     if (b.getRelative(BlockFace.NORTH).getType() == Material.REDSTONE_WIRE) {
-/* 105 */       b.getRelative(BlockFace.NORTH).setData((byte)15);
-/* 106 */       Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Simplestone.getPlugin(), new Runnable()
-/*     */           {
-/*     */             public void run() {
-/* 109 */               b.getRelative(BlockFace.NORTH).setData((byte)0);
-/*     */             }
-/*     */           },  5L);
-/* 112 */     } else if (b.getRelative(BlockFace.EAST).getType() == Material.REDSTONE_WIRE) {
-/* 113 */       b.getRelative(BlockFace.EAST).setData((byte)15);
-/* 114 */       Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Simplestone.getPlugin(), new Runnable()
-/*     */           {
-/*     */             public void run() {
-/* 117 */               b.getRelative(BlockFace.EAST).setData((byte)0);
-/*     */             }
-/*     */           },  5L);
-/* 120 */     } else if (b.getRelative(BlockFace.SOUTH).getType() == Material.REDSTONE_WIRE) {
-/* 121 */       b.getRelative(BlockFace.SOUTH).setData((byte)15);
-/* 122 */       Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Simplestone.getPlugin(), new Runnable()
-/*     */           {
-/*     */             public void run() {
-/* 125 */               b.getRelative(BlockFace.SOUTH).setData((byte)0);
-/*     */             }
-/*     */           },  5L);
-/* 128 */     } else if (b.getRelative(BlockFace.WEST).getType() == Material.REDSTONE_WIRE) {
-/* 129 */       b.getRelative(BlockFace.WEST).setData((byte)15);
-/* 130 */       Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Simplestone.getPlugin(), new Runnable()
-/*     */           {
-/*     */             public void run() {
-/* 133 */               b.getRelative(BlockFace.WEST).setData((byte)0);
-/*     */             }
-/*     */           },  5L);
-/*     */     } 
-/*     */   }
-/*     */   
 /*     */   public static void cleanupEntities() {
 /* 159 */     (new BukkitRunnable() {
 /*     */         public void run() {

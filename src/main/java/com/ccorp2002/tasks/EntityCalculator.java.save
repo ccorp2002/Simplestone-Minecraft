@@ -61,6 +61,7 @@ public class EntityCalculator extends BukkitRunnable {
 				if(myBlock.getType() == Material.LEGACY_DIODE_BLOCK_ON || myBlock.getType() == Material.REPEATER){
 					if(!plugin.getConfig().getBoolean("Settings.Repeater.Enabled")) continue;
 					Diode b = (Diode) myBlock.getState().getData();
+					Utils.powerBlock(i.getLocation());
 					
 					if(myBlock.getRelative(b.getFacing()).getType() != Material.REPEATER || myBlock.getRelative(b.getFacing()).getType() !=  Material.LEGACY_DIODE_BLOCK_ON){
 						Material m = myBlock.getRelative(b.getFacing()).getType();
@@ -75,7 +76,7 @@ public class EntityCalculator extends BukkitRunnable {
 							}else{
 								i.setVelocity(Utils.faceToForce(b.getFacing()).multiply(400 * plugin.getConfig().getDouble("Settings.StairCannon.Force")).add(new Vector(0, 1, 0)));
 							}
-                        }
+                      }
                     if(m_TWO == Material.NETHER_BRICK_STAIRS || m_TWO == Material.LEGACY_SMOOTH_STAIRS || m_TWO == Material.STONE_BRICK_STAIRS || m_TWO == Material.COBBLESTONE_STAIRS){
 							if(!plugin.getConfig().getBoolean("Settings.StairCannon2.Enabled")) continue;
 							if(i instanceof Item){
@@ -116,6 +117,8 @@ public class EntityCalculator extends BukkitRunnable {
 						}
 					}
 					
+					
+					Utils.powerBlock(i.getLocation());
 				}	
 			}
 		}
